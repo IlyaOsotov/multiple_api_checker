@@ -3,7 +3,7 @@ RSpec.describe Client do
   subject { described_class }
 
   context 'when bank api does not registered' do
-    let(:bank_api) { (0...8).map { rand(65..90).chr }.join }
+    let(:bank_api) { Array.new(8) { ('a'..'z').to_a.sample }.join }
 
     it { expect { subject.new(bank_api) }.to raise_error(RuntimeError) }
   end
@@ -11,14 +11,14 @@ RSpec.describe Client do
   described_class::REGISTERED_APIS.each do |bank_api|
     context "when bank api registered #{bank_api}" do
       context 'when service does not registered' do
-        let(:service) { (0...8).map { rand(65..90).chr }.join }
+        let(:service) { Array.new(8) { ('a'..'z').to_a.sample }.join }
         it { expect { subject.new(bank_api).call(service) }.to raise_error(RuntimeError) }
       end
 
       described_class::REGISTERED_SERVICES.each do |service|
         context "when service registered #{service}" do
           context 'when incorrect login/password' do
-            let(:incorrect_text) { (0...8).map { rand(65..90).chr }.join }
+            let(:incorrect_text) { Array.new(8) { ('a'..'z').to_a.sample }.join }
             let(:incorrect_login) { { login: incorrect_text, password: incorrect_text } }
             it {
               expect do
