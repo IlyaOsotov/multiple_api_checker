@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "multiple_api_checker"
+require "client"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
