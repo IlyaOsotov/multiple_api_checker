@@ -10,10 +10,10 @@ class Client
     @bank_api = bank_api(bank_api)
   end
 
-  def call(service, params = {}, headers = {})
+  def call(service, login = {}, params = {})
     raise "not registered service #{service}" unless REGISTERED_SERVICES.include? service
 
-    @bank_api.call(service, params, headers)
+    @bank_api.call(service, login, params)
   end
 
   private

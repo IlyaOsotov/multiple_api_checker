@@ -18,16 +18,10 @@ RSpec.configure do |config|
   config.before do |_config|
     stub_request(:get, /login/)
       .with(query: { 'login' => 'log', 'password' => 'pass' })
-      .to_return(body: '', status: 200)
+      .to_return(body: (0...8).map { rand(65..90).chr }.join, status: 200)
 
     stub_request(:get, /login/)
+      .with(query: hash_excluding('login' => 'log', 'password' => 'pass'))
       .to_return(body: '', status: 401)
-
-    stub_request(:get, /.+/)
-      .to_return(status: 401)
-
-    stub_request(:get, /.+/)
-      .with(headers: { 'Auth-Token' => /.+/ }, body: /.+/)
-      .to_return(status: 200, body: '')
   end
 end
