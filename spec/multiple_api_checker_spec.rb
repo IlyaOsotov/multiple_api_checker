@@ -16,7 +16,7 @@ RSpec.describe Client do
   end
 
   context 'when bank api registered' do
-    let(:bank_api) { (0...8).map { rand(65..90).chr }.join }
+    let(:bank_api) { described_class::REGISTERED_APIS.sample }
 
     context 'when service does not registered' do
       let(:service) { (0...8).map { rand(65..90).chr }.join }
