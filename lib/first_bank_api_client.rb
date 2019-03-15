@@ -1,7 +1,7 @@
 require 'faraday'
 
 class FirstBankApiClient
-  def call(service, params, headers)
+  def call(_service, params, _headers)
     conn = Faraday.new('http://bank_api_first.com/')
 
     resp = conn.get do |req|

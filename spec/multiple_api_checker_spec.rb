@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 RSpec.describe Client do
   it 'has a version number' do
     expect(MultipleApiChecker::VERSION).not_to be nil
@@ -28,10 +29,14 @@ RSpec.describe Client do
             let(:incorrect_text) { (0...8).map { rand(65..90).chr }.join }
             let(:incorrect_login) { { login: incorrect_text, password: incorrect_text } }
             it { expect(subject.new(bank_api).call(service)).to eq('401') }
-            it { expect(subject.new(bank_api).call(service, incorrect_login)).to eq('401') }
+            it {
+              expect(subject.new(bank_api).call(service, incorrect_login))
+                .to eq('401')
+            }
           end
         end
       end
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

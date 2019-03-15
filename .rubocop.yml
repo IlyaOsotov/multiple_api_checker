@@ -2,5 +2,3 @@ Documentation:
   Enabled: false
 Metrics/LineLength:
   Max: 90
-Metrics/BlockLength:
-  Max: 30

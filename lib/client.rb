@@ -12,6 +12,7 @@ class Client
 
   def call(service, params = {}, headers = {})
     raise "not registered service #{service}" unless REGISTERED_SERVICES.include? service
+
     @bank_api.call(service, params, headers)
   end
 
