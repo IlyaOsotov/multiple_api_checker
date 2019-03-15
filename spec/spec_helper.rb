@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'client'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -10,5 +11,23 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  WebMock.disable_net_connect!(allow_localhost: true)
+
+  config.before do |_config|
+    stub_request(:get, /login/)
+      .to_return(body: '', status: 401)
+
+    stub_request(:get, /login/)
+      .with(query: { 'login' => 'log', 'password' => 'pass' })
+      .to_return(body: '', status: 200)
+
+    stub_request(:get, /.+/)
+      .to_return(status: 401)
+
+    stub_request(:get, /.+/)
+      .with(headers: { 'Auth-Token' => /.+/ }, body: /.+/)
+      .to_return(status: 200, body: '')
   end
 end
