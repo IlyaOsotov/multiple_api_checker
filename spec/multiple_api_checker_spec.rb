@@ -7,11 +7,20 @@ RSpec.describe Client do
     expect(true).to eq(true)
   end
 
-  subject { described_class.new(bank_api).call }
+  subject { described_class.new(bank_api) }
 
   context 'when bank api does not registered' do
     let(:bank_api) { (0...8).map { rand(65..90).chr }.join }
 
     it { expect { subject }.to raise_error(RuntimeError) }
+  end
+
+  context 'when bank api registered' do
+    let(:bank_api) { (0...8).map { rand(65..90).chr }.join }
+
+    context 'when service does not registered' do
+      let(:service) { (0...8).map { rand(65..90).chr }.join }
+      it { expect { subject.call(service) }.to raise_error(RuntimeError) }
+    end
   end
 end
