@@ -16,15 +16,15 @@ RSpec.describe Client do
     it { expect { subject.new(bank_api) }.to raise_error(RuntimeError) }
   end
 
-  context 'when bank api registered' do
-    described_class::REGISTERED_APIS.each do |bank_api|
+  described_class::REGISTERED_APIS.each do |bank_api|
+    context "when bank api registered #{bank_api}" do
       context 'when service does not registered' do
         let(:service) { (0...8).map { rand(65..90).chr }.join }
         it { expect { subject.new(bank_api).call(service) }.to raise_error(RuntimeError) }
       end
 
-      context 'when service registered' do
-        described_class::REGISTERED_SERVICES.each do |service|
+      described_class::REGISTERED_SERVICES.each do |service|
+        context "when service registered #{service}" do
           context 'when incorrect login/password' do
             let(:incorrect_text) { (0...8).map { rand(65..90).chr }.join }
             let(:incorrect_login) { { login: incorrect_text, password: incorrect_text } }
