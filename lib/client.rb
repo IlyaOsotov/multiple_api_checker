@@ -1,4 +1,6 @@
 require 'multiple_api_checker/version'
+require 'first_bank_api_client'
+require 'second_bank_api_client'
 
 class Client
   REGISTERED_APIS = %i[bank_api_first bank_api_second].freeze
@@ -8,13 +10,22 @@ class Client
     @bank_api = bank_api(bank_api)
   end
 
-  def call(service, _params = {}, _headers = {})
+  def call(service, params = {}, headers = { 'Content-Type': 'application/json' })
     raise "not registered service #{service}" unless REGISTERED_SERVICES.include? service
+
+    @bank_api.call(service, params, headers)
   end
 
   private
 
   def bank_api(bank_api)
-    raise "not registered api #{bank_api}" unless REGISTERED_APIS.include? bank_api.to_sym
+    case bank_api
+    when :bank_api_first
+      FirstBankApiClient.new
+    when :bank_api_second
+      SecondBankApiClient.new
+    else
+      raise "not registered api #{bank_api}"
+    end
   end
 end
