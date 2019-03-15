@@ -28,10 +28,17 @@ RSpec.describe Client do
           context 'when incorrect login/password' do
             let(:incorrect_text) { (0...8).map { rand(65..90).chr }.join }
             let(:incorrect_login) { { login: incorrect_text, password: incorrect_text } }
-            it { expect(subject.new(bank_api).call(service)).to eq('401') }
             it {
-              expect(subject.new(bank_api).call(service, incorrect_login))
-                .to eq('401')
+              expect do
+                subject.new(bank_api).call(service)
+                       .to raise_error('401 unauthorized')
+              end
+            }
+            it {
+              expect do
+                subject.new(bank_api).call(service, incorrect_login)
+                       .to raise_error('401 unauthorized')
+              end
             }
           end
         end

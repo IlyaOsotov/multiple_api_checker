@@ -17,11 +17,11 @@ RSpec.configure do |config|
 
   config.before do |_config|
     stub_request(:get, /login/)
-      .to_return(body: '', status: 401)
-
-    stub_request(:get, /login/)
       .with(query: { 'login' => 'log', 'password' => 'pass' })
       .to_return(body: '', status: 200)
+
+    stub_request(:get, /login/)
+      .to_return(body: '', status: 401)
 
     stub_request(:get, /.+/)
       .to_return(status: 401)

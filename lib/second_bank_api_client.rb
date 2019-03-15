@@ -1,13 +1,8 @@
 require 'faraday'
+require 'bank_api_client'
 
-class SecondBankApiClient
+class SecondBankApiClient < BankApiClient
   def call(_service, params, _headers)
-    conn = Faraday.new('http://bank_api_first.com/')
-
-    resp = conn.get do |req|
-      req.url '/login', login: params['login'], password: params['password']
-    end
-
-    return '401' if resp.status == 401
+    token = login('http://bank_api_first.com/', params['login'], params['password'])
   end
 end
