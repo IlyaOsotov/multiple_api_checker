@@ -51,7 +51,7 @@ RSpec.describe Client do
       let(:data) { { ean: '40000000000000000000', dateGte: '2018-09-01' } }
       let(:result) { [{ ean: '40000000000000000000', amount: 10_003 }] }
 
-      before(:each) do
+      before do
         stub_request(:post, /.+/)
           .with(
             headers: {
@@ -78,7 +78,7 @@ RSpec.describe Client do
       let(:data) { { ean: '40000000000000000000', date_gte: '2018-09-01' } }
       let(:result) { [{ cean: '40000000000000000000', r320: 10_003 }] }
 
-      before(:each) do
+      before do
         stub_request(:post, /.+/)
           .with(
             headers: {
