@@ -31,14 +31,12 @@ RSpec.describe Client do
             it {
               expect do
                 subject.new(bank_api).call(service)
-                       .to raise_error('401 unauthorized')
-              end
+              end.to raise_error('401 unauthorized')
             }
             it {
               expect do
                 subject.new(bank_api).call(service, incorrect_login)
-                       .to raise_error('401 unauthorized')
-              end
+              end.to raise_error('401 unauthorized')
             }
           end
         end
