@@ -7,7 +7,7 @@ class Client
   REGISTERED_SERVICES = %i[movement_list].freeze
 
   def initialize(bank_api)
-    @bank_api = bank_api(bank_api)
+    @bank_api = construct_bank_api(bank_api)
   end
 
   def call(service, login = {}, params = {})
@@ -18,7 +18,7 @@ class Client
 
   private
 
-  def bank_api(bank_api)
+  def construct_bank_api(bank_api)
     case bank_api
     when :bank_api_first
       FirstBankApiClient.new
