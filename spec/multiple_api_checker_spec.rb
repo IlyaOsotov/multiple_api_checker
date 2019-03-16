@@ -60,7 +60,7 @@ RSpec.describe Client do
                                            data)
       end
 
-      it { expect(subject).to eq(result) }      
+      it { is_expected.to eq(result) }      
     end
     
     context "in bank_api_second" do      
@@ -74,7 +74,7 @@ RSpec.describe Client do
                                            data)
       end
     
-      it { expect(subject).to eq(result) }
+      it { is_expected.to eq(result) }
     end
   end
 end
