@@ -36,7 +36,7 @@ RSpec.describe Client do
     end
   end
 
-  context "movement_list service when correct login/password" do
+  context 'movement_list service when correct login/password' do
     let(:correct_login) { { login: 'log', password: 'pass' } }
 
     before do
@@ -49,7 +49,7 @@ RSpec.describe Client do
         ).to_return(status: 200, body: result)
     end
 
-    context "in bank_api_first" do
+    context 'in bank_api_first' do
       let(:bank_api) { :bank_api_first }
       let(:data) { { ean: '40000000000000000000', dateGte: '2018-09-01' } }
       let(:result) { [{ ean: '40000000000000000000', amount: 10_003 }] }
@@ -60,20 +60,20 @@ RSpec.describe Client do
                                            data)
       end
 
-      it { is_expected.to eq(result) }      
+      it { is_expected.to eq(result) }
     end
-    
-    context "in bank_api_second" do      
+
+    context 'in bank_api_second' do
       let(:bank_api) { :bank_api_second }
       let(:data) { { ean: '40000000000000000000', date_gte: '2018-09-01' } }
       let(:result) { [{ cean: '40000000000000000000', r320: 10_003 }] }
-    
+
       subject do
         described_class.new(bank_api).call(described_class::REGISTERED_SERVICES.first,
                                            correct_login,
                                            data)
       end
-    
+
       it { is_expected.to eq(result) }
     end
   end
