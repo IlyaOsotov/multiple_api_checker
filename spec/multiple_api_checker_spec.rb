@@ -3,7 +3,7 @@ RSpec.describe Client do
   subject { described_class }
 
   context 'when bank api does not registered' do
-    let(:bank_api) { Array.new(8) { ('a'..'z').to_a.sample }.join }
+    let(:bank_api) { Array.new(8) { ('a'..'z').to_a.sample }.join.to_sym }
 
     it { expect { subject.new(bank_api) }.to raise_error(RuntimeError) }
   end
@@ -11,7 +11,7 @@ RSpec.describe Client do
   described_class::REGISTERED_APIS.each do |bank_api|
     context "when bank api registered #{bank_api}" do
       context 'when service does not registered' do
-        let(:service) { Array.new(8) { ('a'..'z').to_a.sample }.join }
+        let(:service) { Array.new(8) { ('a'..'z').to_a.sample }.join.to_sym }
         it { expect { subject.new(bank_api).call(service) }.to raise_error(RuntimeError) }
       end
 
@@ -40,7 +40,7 @@ RSpec.describe Client do
     let(:correct_login) { { login: 'log', password: 'pass' } }
 
     before do
-      stub_request(:post, /.+/)
+      stub_request(:post, /movement_list/)
         .with(
           headers: {
             'Auth-Token' => /.+/,
